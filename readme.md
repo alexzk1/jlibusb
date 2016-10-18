@@ -53,3 +53,15 @@ public class TestLibUsb
 }
 ```
 
+
+###On Android 5.x+ (SE hardened) it must be next order:
+
+* device must be opened by UsbManager
+
+* device must be opened by libusb
+
+* some work loop
+
+* device closed by libusb
+
+* device closed by UsbManager
