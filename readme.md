@@ -19,3 +19,36 @@ Project was created using next tools:
 
 You can [download](https://github.com/alexzk1/jlibusb/our/artifacts/jlibusb_jar/jlibusb.jar) precompiled jar file and just add to your project.
 
+
+##Sample to list USB devices connected:
+
+```java
+public class TestLibUsb
+{
+    public static void main(String[] argv) throws IOException
+    {
+
+        try (UsbContext cnt = new UsbContext())
+        {
+            IUsbDeviceEnum device = cnt.getEnumerator();
+            device.updateDevices(null); //maybe instance of IUsbDeviceFilter passed here to catch only exact devices
+            IDeviceList list = device.getCachedDeviceList();
+
+            for (int i = 0; i< list.size(); i++)
+                try(libusb_device d = list.get(i))
+                {
+                    System.out.println(d.getDescriptor().pidvid());
+                }
+
+        } catch (LibUsbException le)
+        {
+            System.err.println(le.getMessage());
+            le.printStackTrace();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
