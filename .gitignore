@@ -1,0 +1,6 @@
+.o
+.class
+production/
+.deps/
+.libs/
+.bzr/

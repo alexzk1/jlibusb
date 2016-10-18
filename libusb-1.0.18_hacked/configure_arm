@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -e
+
+#export CFLAGS=--specs=nosys.specs
+#export CPPFLAGS=--specs=nosys.specs
+make clean
+export PATH=$PATH:/home/alex/Work/cross-tools/armv6-unknown-linux-gnueabi/bin/
+export CFLAGS=-march=armv6
+./configure --host=armv6-unknown-linux-gnueabi --disable-udev
+make

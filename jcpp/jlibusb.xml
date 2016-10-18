@@ -1,0 +1,122 @@
+<!--
+ This is ANT task script to compile libusb wrapper binary which is used from Java code.
+ Compiling machine is assumed to be linux 64 bit.
+
+ To compile everything "All" next is required:
+ 1. GCC which do i686/x86_64
+ 2. GCC which do arm - cross compile
+ 3. mingw
+ 4. android ndk.
+
+ javacpp.jar included may have modified properties files inside to be called from this scrip compairing to original.
+-->
+<project name="jlibusb" default="desktop-and-android">
+
+    <!-- Some locations defines of the tools on your system -->
+    <property name="ndkRoot" location="/opt/android-ndk"/>
+    <property name="armCompiler" location="/home/alex/Work/cross-tools/armv6-unknown-linux-gnueabi/bin/armv6-unknown-linux-gnueabi-g++"/>
+
+
+
+
+    <property name="projRoot" location="${basedir}/.."/>
+    <property name="projIncl" location="${projRoot}/include"/>
+    <property name="setIncl" value="-Xcompiler -I${projIncl}"/>
+
+    <property name="options" value=""/>
+
+    <property name="generator" location="${projRoot}/jcpp/javacpp"/>
+    <property name="jarRoot"  location="${projRoot}/out/artifacts/${ant.project.name}"/>
+    <property name="binRoot"  location="${projRoot}/out/production/${ant.project.name}"/>
+    <property name="class_package"  value="biz.an_droid.usblib.jlibusb.**"/>
+    <property name="class_package_droid"  value="biz.an_droid.usblib.android.**"/>
+    <property name="clss"     location="${binRoot}"/>
+
+    <property name="allOut"      location="${projRoot}/lib/tojar/lib"/>
+
+    <property name="android5Out"  location="${allOut}/armeabi"/>
+    <property name="android64Out"  location="${allOut}/arm64-v8a"/>
+
+
+    <property name="lin64Out"  location="${allOut}/lin64"/>
+    <property name="lin32Out"  location="${allOut}/lin32"/>
+
+    <property name="win64Out"  location="${allOut}/win64"/>
+    <property name="win32Out"  location="${allOut}/win32"/>
+
+    <property name="linarmv6Out"  location="${allOut}/linarm"/>
+
+    <property name="engineInclude" location="${projRoot}/include"/>
+    <property name="setInclude" value="-Xcompiler -I${engineInclude}"/>
+
+    <target name="androids"    depends = "android-arm, android-arm64"/>
+    <target name="windows"     depends = "windows-64-cross, windows-32-cross"/>
+    <target name="linux-intel" depends = "linux-x86_64, linux-i686"/>
+    <target name="pc-desktop"  depends = "windows, linux-intel"/>
+    <target name="desktop-and-android" depends = "androids, pc-desktop"/>
+    <target name="all"         depends ="linux-armv6-rpi, androids, pc-desktop"/>
+
+    <target name='android-arm'>
+        <property name="libs5Out"  value="${android5Out}"/>
+        <property name="link5Path" value="-Xcompiler -L${android5Out}"/>
+        <exec executable="${generator}">
+            <arg line=" -classpath ${clss} -d ${libs5Out} -properties android-arm ${link5Path} -Dplatform.root=${ndkRoot} ${setIncl} ${options} ${class_package} ${class_package_droid}"/>
+        </exec>
+    </target>
+
+    <target name='android-arm64'>
+        <property name="libs64Out"  value="${android64Out}"/>
+        <property name="link64Path" value="-Xcompiler -L${android64Out}"/>
+        <exec executable="${generator}">
+            <arg line=" -classpath ${clss} -d ${libs64Out} -properties android-arm64 ${link64Path} -Dplatform.root=${ndkRoot} ${setIncl} ${options} ${class_package} ${class_package_droid}"/>
+        </exec>
+    </target>
+
+    <target name='linux-x86_64'>
+        <property name="libsOutD"  value="${lin64Out}"/>
+        <property name="linkPathD" value="-Xcompiler -L${lin64Out}"/>
+
+        <exec executable="${generator}">
+            <arg line=" -classpath ${clss} -d ${libsOutD} -properties linux-x86_64 ${linkPathD}  ${options} ${class_package}"/>
+        </exec>
+    </target>
+
+    <target name='linux-i686'>
+        <property name="libsOutD2"  value="${lin32Out}"/>
+        <property name="linkPathD2" value="-Xcompiler -L${lin32Out} -Xcompiler -L/usr/lib32 -Xcompiler -L${allOut}/../../libusb/lin32"/>
+
+        <exec executable="${generator}">
+            <arg line=" -classpath ${clss} -d ${libsOutD2} -properties linux-x86 ${linkPathD2}  ${options} ${class_package}"/>
+        </exec>
+    </target>
+
+
+    <target name='linux-armv6-rpi'>
+        <property name="libsOutD3"  value="${linarmv6Out}"/>
+        <property name="linkPathD3" value="-Xcompiler -L${linarmv6Out} -Xcompiler -L${allOut}/../../libusb/arm"/>
+        <exec executable="${generator}">
+            <arg line=" -classpath ${clss} -d ${libsOutD3} -properties linux-arm -Xcompiler -march=armv6  ${options} ${linkPathD3} -Dplatform.compiler=${armCompiler} ${setIncl} ${class_package}"/>
+        </exec>
+    </target>
+
+    <!-- cross compiling for windows on linux system using mingw -->
+    <target name='windows-64-cross'>
+        <property name="libsOutDw64"  location="${win64Out}"/>
+        <property name="linkPathDw64" value="-Xcompiler -L${win64Out} -Xcompiler -L${projRoot}/lib/libusb/MinGW64/dll"/>
+
+        <exec executable="${generator}">
+            <arg line=" -classpath ${clss} -d ${libsOutDw64} -properties win64_cross ${linkPathDw64} ${setInclude} ${class_package}"/>
+        </exec>
+    </target>
+
+    <target name='windows-32-cross'>
+        <property name="libsOutDw32"  location="${win32Out}"/>
+        <property name="linkPathDw32" value="-Xcompiler -L${win32Out} -Xcompiler -L${projRoot}/lib/libusb/MinGW32/dll"/>
+
+        <exec executable="${generator}">
+            <arg line=" -classpath ${clss} -d ${libsOutDw32} -properties win32_cross ${linkPathDw32} ${setInclude} ${class_package}"/>
+        </exec>
+    </target>
+
+</project>
+

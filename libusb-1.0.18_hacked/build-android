@@ -1,0 +1,4 @@
+#!/bin/bash
+set -e
+cd android/jni
+ndk-build
