@@ -17,7 +17,8 @@ Project was created using next tools:
 - Android NDK.
 
 
-You can [download](https://github.com/alexzk1/jlibusb/our/artifacts/jlibusb_jar/jlibusb.jar) precompiled jar file and just add to your project.
+You can [download](https://github.com/alexzk1/jlibusb/blob/master/out/artifacts/jlibusb_jar/jlibusb.jar) precompiled jar file and just add to your project.
+
 
 
 ##Sample to list USB devices connected:
