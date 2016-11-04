@@ -10,14 +10,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0a4d18d2-c36f-4b86-b931-b4e5344a153d" name="Default" comment="Some fixes/updates, checks for null on close(), loader from current class path, test of reopen of libusb.&#10;">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/tojar/lib/arm64-v8a/libjnilibusb.so" afterPath="$PROJECT_DIR$/lib/tojar/lib/arm64-v8a/libjnilibusb.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/tojar/lib/armeabi/libjnilibusb.so" afterPath="$PROJECT_DIR$/lib/tojar/lib/armeabi/libjnilibusb.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/tojar/lib/linarm/libjnilibusb.so" afterPath="$PROJECT_DIR$/lib/tojar/lib/linarm/libjnilibusb.so" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/tojar/lib/win32/jnilibusb.dll" afterPath="$PROJECT_DIR$/lib/tojar/lib/win32/jnilibusb.dll" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/tojar/lib/win64/jnilibusb.dll" afterPath="$PROJECT_DIR$/lib/tojar/lib/win64/jnilibusb.dll" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/jlibusb_jar/jlibusb.jar" afterPath="$PROJECT_DIR$/out/artifacts/jlibusb_jar/jlibusb.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/biz/an_droid/test/TestLibUsb.java" afterPath="$PROJECT_DIR$/src/biz/an_droid/test/TestLibUsb.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/biz/an_droid/usblib/UsbContext.java" afterPath="$PROJECT_DIR$/src/biz/an_droid/usblib/UsbContext.java" />
     </list>
     <ignored path="jlibusb.iws" />
@@ -54,8 +46,8 @@
       <file leaf-file-name="UsbContext.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/biz/an_droid/usblib/UsbContext.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="615">
-              <caret line="51" column="77" selection-start-line="51" selection-start-column="77" selection-end-line="51" selection-end-column="77" />
+            <state relative-caret-position="120">
+              <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -918,12 +910,12 @@
       <workItem from="1476826038240" duration="1277000" />
       <workItem from="1476828131720" duration="1126000" />
       <workItem from="1476829721871" duration="12000" />
-      <workItem from="1478218454420" duration="5472000" />
+      <workItem from="1478218454420" duration="5711000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="47159000" />
+    <option name="totallyTimeSpent" value="47398000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-4" y="0" width="1928" height="1041" extended-state="6" />
@@ -1380,8 +1372,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/biz/an_droid/usblib/UsbContext.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="51" column="77" selection-start-line="51" selection-start-column="77" selection-end-line="51" selection-end-column="77" />
+        <state relative-caret-position="120">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding />
         </state>
       </provider>

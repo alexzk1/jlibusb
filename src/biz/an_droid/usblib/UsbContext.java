@@ -6,7 +6,6 @@ import biz.an_droid.usblib.enumerator.IUsbDeviceEnum;
 import biz.an_droid.usblib.enumerator.UsbDeviceEnum;
 import biz.an_droid.usblib.excepts.LibUsbError;
 import biz.an_droid.usblib.jlibusb.*;
-import org.bytedeco.javacpp.annotation.Allocator;
 
 import java.io.IOException;
 
