@@ -17,7 +17,14 @@ public class TestLibUsb
 {
     public static void main(String[] argv) throws IOException
     {
+        System.out.println("Try 1");
+        singleTry();
+        System.out.println("Try 2");
+        singleTry();
+    }
 
+    private static void singleTry()
+    {
         try (UsbContext cnt = new UsbContext())
         {
             IUsbDeviceEnum device = cnt.getEnumerator();

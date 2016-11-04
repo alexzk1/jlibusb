@@ -9,6 +9,8 @@ import biz.an_droid.usblib.jlibusb.*;
 
 import java.io.IOException;
 
+import static biz.an_droid.jars.OsCheck.getOperatingSystemType;
+
 /**
  * Created by alex (alexzkhr@gmail.com) on 11/13/14.
  * At 00:34
@@ -31,8 +33,11 @@ public class UsbContext implements AutoCloseable
         }
         if (s==null || s.toLowerCase().endsWith(".jar"))
             tryLoadUsbLibFromJar();
-        //else
-         //   tryLoadUsbLibFromProject();
+        else
+        {
+            if (getOperatingSystemType() != OsCheck.OSType.Android)
+                tryLoadUsbLibFromProject();
+        }
         usbContext.setNull();
 
         /*
@@ -47,8 +52,11 @@ public class UsbContext implements AutoCloseable
     @Override
     public void close() throws Exception
     {
-        enumerator.close();
-        LibUsbGlobals.libusb_exit(usbContext);
+        if (enumerator != null)
+            enumerator.close();
+
+        if (!usbContext.isNull())
+            LibUsbGlobals.libusb_exit(usbContext);
     }
 
     public IUsbDeviceEnum getEnumerator()
@@ -79,14 +87,14 @@ public class UsbContext implements AutoCloseable
            System.err.println("No native usb-1.0 found, trying from jar.");
         }
 
-        if (OsCheck.getOperatingSystemType() == OsCheck.OSType.Android)
+        if (getOperatingSystemType() == OsCheck.OSType.Android)
         {
             System.loadLibrary("jnilibusb");
         }
         else
         {
             //System.out.println("Loading path: "+p);
-            if (OsCheck.getOperatingSystemType() == OsCheck.OSType.Windows)
+            if (getOperatingSystemType() == OsCheck.OSType.Windows)
             {
                 if (OsCheck.getBitness() == OsCheck.CpuBitness.b32)
                     NativesJarLoader.loadLibraryFromJar(p + "/libgcc_s_sjlj-1.dll");
