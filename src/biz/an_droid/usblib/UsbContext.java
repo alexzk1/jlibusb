@@ -6,6 +6,7 @@ import biz.an_droid.usblib.enumerator.IUsbDeviceEnum;
 import biz.an_droid.usblib.enumerator.UsbDeviceEnum;
 import biz.an_droid.usblib.excepts.LibUsbError;
 import biz.an_droid.usblib.jlibusb.*;
+import org.bytedeco.javacpp.annotation.Allocator;
 
 import java.io.IOException;
 
@@ -17,35 +18,38 @@ import static biz.an_droid.jars.OsCheck.getOperatingSystemType;
  */
 public class UsbContext implements AutoCloseable
 {
-    private final libusb_context usbContext = new libusb_context();
+    private final libusb_context usbContext;
     private final UsbDeviceEnum enumerator;
 
-    public UsbContext() throws IOException
+    static
     {
         String s = null;
         try
         {
             s = UsbContext.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            if (s==null || s.toLowerCase().endsWith(".jar"))
+                tryLoadUsbLibFromJar();
+            else
+            {
+                if (getOperatingSystemType() != OsCheck.OSType.Android)
+                    tryLoadUsbLibFromProject();
+            }
         }
-        catch (Exception ignored)
+        catch (Exception e)
         {
+            e.printStackTrace();
+        }
+    }
 
-        }
-        if (s==null || s.toLowerCase().endsWith(".jar"))
-            tryLoadUsbLibFromJar();
-        else
-        {
-            if (getOperatingSystemType() != OsCheck.OSType.Android)
-                tryLoadUsbLibFromProject();
-        }
+    public UsbContext()
+    {
+        usbContext = new libusb_context();
         usbContext.setNull();
-
         /*
         libusb requires that the VFS usbfs is mounted. After adding the following line to /etc/fstab the problem (err -99 on _init) was solved:
         usbfs   /proc/bus/usb   usbfs   defaults   0   0
          */
         LibUsbError.buildErr(LibUsbGlobals.libusb_init(usbContext)).RiseIf();
-
         enumerator = new UsbDeviceEnum(usbContext);
     }
 

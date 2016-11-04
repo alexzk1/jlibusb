@@ -23,7 +23,7 @@ public class TestLibUsb
         singleTry();
     }
 
-    private static void singleTry()
+    public static void singleTry()
     {
         try (UsbContext cnt = new UsbContext())
         {
