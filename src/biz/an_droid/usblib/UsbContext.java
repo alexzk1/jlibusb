@@ -22,22 +22,31 @@ public class UsbContext implements AutoCloseable
 
     static
     {
-        String s = null;
-        try
+        if (getOperatingSystemType() != OsCheck.OSType.Android)
         {
-            s = UsbContext.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-            if (s==null || s.toLowerCase().endsWith(".jar"))
-                tryLoadUsbLibFromJar();
-            else
+            String s = null;
+            try
             {
-                if (getOperatingSystemType() != OsCheck.OSType.Android)
+                s = UsbContext.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+                if (s == null || s.toLowerCase().endsWith(".jar"))
+                    tryLoadUsbLibFromJar();
+                else
+                {
                     tryLoadUsbLibFromProject();
+                }
+            } catch (Exception e)
+            {
+                e.printStackTrace();
             }
         }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        else
+            try
+            {
+                tryLoadUsbLibFromJar();
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
     }
 
     public UsbContext()
